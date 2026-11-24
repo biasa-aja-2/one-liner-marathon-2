@@ -42,6 +42,7 @@ ENTRY = ("I started journaling to clear my head, and now I have written "
          "proof there was nothing in it.")
 
 MAX_CHARS = 280
+MIN_WORDS = 5
 OUTPUT_PATH = "/output/entry.txt"
 
 
@@ -66,7 +67,9 @@ def gate_failures(text):
         failures.append("entry is not exactly one sentence")
     if "  " in text:
         failures.append("entry contains consecutive spaces")
-    if len(text.split()) < 5:
+    if "\t" in text:
+        failures.append("entry contains a tab character")
+    if len(text.split()) < MIN_WORDS:
         failures.append("entry has fewer than 5 words")
     for ch in text:
         if ord(ch) < 0x20:
